@@ -2,17 +2,25 @@ import java.io.IOException;
 
 public class Cmd {
     public static void run(String cmd){
-        if(eq(cmd, "help")) help();
-        else if(eq(cmd, "inventory")||eq(cmd, "i")) inventory();
-        else if(eq(cmd,"look")||eq(cmd, "l")) look();
-        else if(eq(cmd, "map")||eq(cmd, "m")) openMap();
-        else if(eq(cmd, "w")) w();
-        else if(eq(cmd, "s")) s();
-        else if(eq(cmd, "a")) a();
-        else if(eq(cmd, "d")) d();
+        int csize=cmd.length();
+        String one=new String();
+        if(csize>0) {one+=cmd.charAt(0);}
+        
+        if(eq(cmd, "help")) {help();Main.page=cmd;}
+        else if(eq(cmd, "i")|eq(cmd, "inventory")) {inventory();Main.page=cmd;}
+        else if(eq(cmd, "l")|eq(cmd,"look")) look();
+        else if(eq(cmd, "m")|eq(cmd, "map")) {openMap();Main.page=cmd;}
+        else if(eq(one, "w")) {if(csize==1)w();else w(cmd.charAt(1)-'0');setMap();}
+        else if(eq(one, "s")) {if(csize==1)s();else s(cmd.charAt(1)-'0');setMap();}
+        else if(eq(one, "a")) {if(csize==1)a();else a(cmd.charAt(1)-'0');setMap();}
+        else if(eq(one, "d")) {if(csize==1)d();else d(cmd.charAt(1)-'0');setMap();}
+        if(eq(cmd, "b")|eq(cmd,"back")) {Main.page="game";cls();}
+        else if(!Main.page.equals("game")) System.out.println("Type 'BACK' or 'b' back to the main game");
+        Map.check();
     }
 
     private static void help(){
+        cls();
         System.out.println("Basics:");
         System.out.println("Type W,A,S,D to navigate");
         System.out.println("Type 'inventory' or 'i' to open your bag");
@@ -34,14 +42,26 @@ public class Cmd {
     private static void w(){
         if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, --Map.y);}
     }
+    private static void w(int n){
+        for(int i=0;i<n;++i)if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, --Map.y);}
+    }
     private static void s(){
         if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, ++Map.y);}
+    }
+    private static void s(int n){
+        for(int i=0;i<n;++i)if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, ++Map.y);}
     }
     private static void a(){
         if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' '){remove(Map.x, Map.y);setPos(--Map.x, Map.y);}
     }
+    private static void a(int n){
+        for(int i=0;i<n;++i)if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' '){remove(Map.x, Map.y);setPos(--Map.x, Map.y);}
+    }
     private static void d(){
         if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' '){remove(Map.x, Map.y);setPos(++Map.x, Map.y);}
+    }
+    private static void d(int n){
+        for(int i=0;i<n;++i)if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' '){remove(Map.x, Map.y);setPos(++Map.x, Map.y);}
     }
     private static void openMap(){
         cls();
@@ -56,6 +76,10 @@ public class Cmd {
     }
     private static void remove(int x,int y){Main.map[y]=Main.map[y].substring(0, x)+" "+Main.map[y].substring(x+1);}
     private static void remove(String[] s,int x,int y){}
+    private static void setMap(){int i;
+        for(i=0;i<Main.LINE-1;++i) System.out.print(Main.map[i]);
+        System.out.println("X:"+Map.x+" Y:"+Map.y+"\t"+Map.pos);
+    }
     public static boolean eq(String str,String cmd) {return str.equalsIgnoreCase(cmd);}
     private static void cls(){
         try {
