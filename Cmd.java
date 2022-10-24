@@ -16,7 +16,7 @@ public class Cmd {
         else if(eq(one, "d")) {if(csize==1)d();else d(cmd.charAt(1)-'0');setMap();}
         if(eq(cmd, "b")|eq(cmd,"back")) {Main.page="game";cls();}
         else if(!Main.page.equals("game")) System.out.println("Type 'BACK' or 'b' back to the main game");
-        Map.check();
+        
     }
 
     private static void help(){
@@ -40,40 +40,51 @@ public class Cmd {
 
     }
     private static void w(){
-        if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, --Map.y);}
-    }
-    private static void w(int n){
-        for(int i=0;i<n;++i)if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, --Map.y);}
+        if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' ')
+        {remove(Map.x, Map.y);setPos(Map.x, --Map.y);Map.check();}
     }
     private static void s(){
-        if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, ++Map.y);}
-    }
-    private static void s(int n){
-        for(int i=0;i<n;++i)if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' '){remove(Map.x, Map.y);setPos(Map.x, ++Map.y);}
+        if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' ')
+        {remove(Map.x, Map.y);setPos(Map.x, ++Map.y);Map.check();}
     }
     private static void a(){
-        if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' '){remove(Map.x, Map.y);setPos(--Map.x, Map.y);}
-    }
-    private static void a(int n){
-        for(int i=0;i<n;++i)if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' '){remove(Map.x, Map.y);setPos(--Map.x, Map.y);}
+        if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' ')
+        {remove(Map.x, Map.y);setPos(--Map.x, Map.y);Map.check();}
     }
     private static void d(){
-        if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' '){remove(Map.x, Map.y);setPos(++Map.x, Map.y);}
+        if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' ')
+        {remove(Map.x, Map.y);setPos(++Map.x, Map.y);Map.check();}
+    }
+
+    private static void w(int n){
+        for(int i=0;i<n;++i)
+        if(Map.y>1&Main.map[Map.y-1].charAt(Map.x)==' ')
+        {remove(Map.x, Map.y);setPos(Map.x, --Map.y);Map.check();}
+    }
+    private static void s(int n){
+        for(int i=0;i<n;++i)
+        if(Map.y<Main.LINE-1&Main.map[Map.y+1].charAt(Map.x)==' ')
+        {remove(Map.x, Map.y);setPos(Map.x, ++Map.y);Map.check();}
+    }
+    private static void a(int n){
+        for(int i=0;i<n;++i)
+        if(Map.x>1&Main.map[Map.y].charAt(Map.x-1)==' ')
+        {remove(Map.x, Map.y);setPos(--Map.x, Map.y);Map.check();}
     }
     private static void d(int n){
-        for(int i=0;i<n;++i)if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' '){remove(Map.x, Map.y);setPos(++Map.x, Map.y);}
+        for(int i=0;i<n;++i)
+        if(Map.x<Main.map[Map.y].length()-2&Main.map[Map.y].charAt(Map.x+1)==' ')
+        {remove(Map.x, Map.y);setPos(++Map.x, Map.y);Map.check();}
     }
+    
     private static void openMap(){
         cls();
-        int i;
-        for(i=0;i<Main.LINE-1;++i) System.out.print(Main.map[i]);
+        setMap();
     }
     private static void setPos(int x,int y){
         Main.map[y]=Main.map[y].substring(0, x)+"O"+Main.map[y].substring(x+1);
     }
-    private static void setPos(String[] s,int x,int y){
-
-    }
+    private static void setPos(String[] s,int x,int y){}
     private static void remove(int x,int y){Main.map[y]=Main.map[y].substring(0, x)+" "+Main.map[y].substring(x+1);}
     private static void remove(String[] s,int x,int y){}
     private static void setMap(){int i;
@@ -82,10 +93,12 @@ public class Cmd {
     }
     public static boolean eq(String str,String cmd) {return str.equalsIgnoreCase(cmd);}
     private static void cls(){
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e1) { // 改自己的异常类
-            e1.printStackTrace();
-        }
+        int i;
+        for(i=0;i<40;++i){System.out.println();}
+        // try {
+        //     Runtime.getRuntime().exec("cls");
+        // } catch (IOException e1) { // 改自己的异常类
+        //     e1.printStackTrace();
+        // }
     }
 }

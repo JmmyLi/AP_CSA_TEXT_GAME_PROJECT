@@ -1,4 +1,4 @@
-public class Item {
+public class Item extends Inventory{
     String name;
     int num;
     public String description;
@@ -13,15 +13,15 @@ public class Item {
         "A shining coin",
         "An odd stone"};
 
-    public Item(String itemName){
-        this.name = itemName;
-        this.num = 1;
-        this.description="";
-    }
+    // public Item(String itemName){
+    //     this.name = itemName;
+    //     this.num = 1;
+    //     this.description="";
+    // }
     
-    public Item(String itemName,int n){
-        this.name = itemName;
-        this.num = n;
-        this.description="";
-    }
+    // public Item(String itemName,int n){
+    //     this.name = itemName;
+    //     this.num = n;
+    //     this.description="";
+    // }
 }
